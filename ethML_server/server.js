@@ -36,8 +36,8 @@ const validationQueue = new Bull('validation-tasks', process.env.REDIS_URL);
 
 // Web3 setup
 const web3 = new Web3(process.env.ETH_NODE_URL || 'http://localhost:8545');
-const ethMLContract = new web3.eth.Contract(
-    require('../build/contracts/EthML.json').abi,
+const denAIContract = new web3.eth.Contract(
+    require('../build/contracts/DenAI.json').abi,
     process.env.CONTRACT_ADDRESS
 );
 
@@ -79,7 +79,7 @@ trainingQueue.process(async (job) => {
             try {
                 // Submit result to blockchain
                 const accounts = await web3.eth.getAccounts();
-                await ethMLContract.methods
+                await denAIContract.methods
                     .submitValidation(taskId, result.prediction)
                     .send({ from: accounts[0] });
                 resolve(result);
@@ -97,7 +97,7 @@ app.post('/api/tasks', async (req, res) => {
         const accounts = await web3.eth.getAccounts();
         
         // Create task on blockchain
-        const result = await ethMLContract.methods
+        const result = await denAIContract.methods
             .requestPrediction(modelId, dataPoint, tip)
             .send({ 
                 from: accounts[0],
@@ -121,7 +121,7 @@ app.post('/api/tasks', async (req, res) => {
 
 app.get('/api/tasks/:taskId', async (req, res) => {
     try {
-        const task = await ethMLContract.methods
+        const task = await denAIContract.methods
             .getTask(req.params.taskId)
             .call();
         res.json(task);
