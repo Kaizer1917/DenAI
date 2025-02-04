@@ -1,4 +1,4 @@
-# EthML 🌐
+# EthML 
 > A decentralized machine learning implementation on Ethereum.
 
 EthML is a fully functional prototype of a decentralized machine learning system, built on the Ethereum blockchain. Decentralized AI aims to combat the high degree of centralization in the field of AI by adding the aspect of distributed computing (here, Distributed Ledger Technology). EthML allows users to receive predictions from pre-trained ML models residing on a distributed computing network. Users upload the IPFS hash of a data-point & the model id of the model they want the prediction for to a smart contract deployed on Ethereum. This smart contract thereafter forwards the request to the mining system, which is a set of computers running the EthML-server & storing the models. These servers compute the prediction and upload the generated data along with a mining solution (used as a proof of work for utility token generation) back onto the smart contract, which then returns result to the user.
@@ -7,6 +7,33 @@ EthML is a fully functional prototype of a decentralized machine learning system
 The design can be thought of as a two-layer structure. The base layer being the model network of computers that make the prediction and also finds the proof of work solution. The top layer would be formed of the set of managing smart contracts which would function as a virtual/logical chain on-top of the existing chain. This virtual chain would keep track of the requested predictions.
 
 ![EthML architecture](https://i.ibb.co/zmy2XSw/tuxpi-com-1608895635.jpg)
+
+## Distributed EthML Platform
+
+A decentralized machine learning platform built on Ethereum that supports distributed model training and multiple simultaneous users.
+
+### Architecture
+
+The platform consists of several key components:
+
+1. **Smart Contract (contracts/EthML.sol)**
+   - Handles user roles (trainers and validators)
+   - Manages training tasks and their lifecycle
+   - Implements reward distribution
+   - Maintains task state and validation requirements
+
+2. **Server (ethML_server/server.js)**
+   - Manages distributed worker nodes
+   - Handles task distribution and load balancing
+   - Provides REST API for client interactions
+   - Uses Redis for distributed state management
+   - Implements Bull for task queuing
+
+3. **Worker (ethML_server/worker.js)**
+   - Handles actual model training tasks
+   - Reports system metrics for load balancing
+   - Implements fault tolerance
+   - Communicates with server via WebSocket
 
 ## Running Locally
 This repo is a truffle project, consisting of the smart contracts and a server implemented in JS.
@@ -80,6 +107,68 @@ await instance.requestPrediction(1, "bafkreiaeigybm7ca2bk4xc3rfoxuvija53tyekayg3
 
 The running servers would catch the generated requests and start mining the result.
 
+## Setup for Distributed EthML Platform
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Configure environment:
+```bash
+cp ethML_server/.env.example ethML_server/.env
+# Edit .env with your configuration
+```
+
+3. Start Redis:
+```bash
+redis-server
+```
+
+4. Deploy smart contract:
+```bash
+truffle migrate
+```
+
+5. Start server:
+```bash
+cd ethML_server
+npm run start
+```
+
+6. Start worker(s):
+```bash
+cd ethML_server
+node worker.js
+```
+
+## API Endpoints
+
+- `POST /api/tasks`: Create new training task
+- `GET /api/tasks/:taskId`: Get task status and results
+
+## Architecture Benefits
+
+1. **Scalability**
+   - Distributed task processing
+   - Load balancing across workers
+   - Redis-based state management
+
+2. **Reliability**
+   - Multiple validation requirements
+   - Fault tolerance
+   - Task queue management
+
+3. **Security**
+   - Role-based access control
+   - Rate limiting
+   - Input validation
+
+4. **Performance**
+   - Asynchronous task processing
+   - WebSocket-based communication
+   - Efficient state management
+
 ## Screenshots
 
 Value Mining:
@@ -90,3 +179,10 @@ New Block:
 
 ![New Block](https://i.ibb.co/cYzJ7kP/2.png)
 
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
