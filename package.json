@@ -1,13 +1,15 @@
 {
   "name": "ethml-core",
   "version": "1.0.0",
-  "description": "",
+  "description": "Distributed Ethereum-based Machine Learning Platform",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "start": "node dist/server.js",
+    "dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,23 @@
     "log-update": "^4.0.0",
     "nano-ipfs-store": "^0.1.3",
     "python-shell": "^2.0.3",
-    "web3": "^1.3.0"
+    "web3": "^1.3.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.0.0",
+    "redis": "^3.1.2",
+    "bull": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.3",
+    "dotenv": "^8.2.0",
+    "cors": "^2.8.5",
+    "helmet": "^4.4.1",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^5.2.6",
+    "pm2": "^4.5.6"
+  },
+  "devDependencies": {
+    "mocha": "^8.3.2",
+    "chai": "^4.3.4",
+    "nodemon": "^2.0.7"
   }
 }
