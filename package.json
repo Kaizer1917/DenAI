@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AnshuJalan/EthML-core.git"
+    "url": "git+https://github.com/Kaizer1917/DenAI.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AnshuJalan/EthML-core/issues"
+    "url": "https://github.com/Kaizer1917/DenAI/issues"
   },
-  "homepage": "https://github.com/AnshuJalan/EthML-core#readme",
+  "homepage": "https://github.com/Kaizer1917/DenAI#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "cli-spinners": "^2.5.0",
